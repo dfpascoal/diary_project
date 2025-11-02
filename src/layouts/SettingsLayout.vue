@@ -63,12 +63,20 @@ function toggleTheme() {
 async function openLogout() {
   const { default: LogoutDialog } = await import('@/components/settings/LogoutDialog.vue')
   dialog.open(LogoutDialog, {
-    props: { header: 'Confirmar saída', modal: true, closable: false, style: { width: '28rem' } },
+    props: { 
+      header: '', 
+      modal: true, 
+      closable: true,
+      dismissableMask: true,
+      style: { width: '28rem' },
+      contentClass: 'logout-dialog-container'
+    },
     data: {
       onLogout: async () => {
         console.log('Usuário saiu')
-        router.replace('/login')
-      }
+        await new Promise(resolve => setTimeout(resolve, 500))
+      },
+      redirectTo: '/login'
     }
   })
 }
@@ -90,3 +98,117 @@ async function openLogout() {
     </main>
   </div>
 </template>
+
+<style scoped>
+.settings-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark .settings-header {
+  background: #16181c;
+  border-bottom-color: #2f3336;
+}
+
+.settings-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f1419;
+  margin: 0;
+}
+
+.dark .settings-title {
+  color: #ffffff;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.settings-layout {
+  display: flex;
+  min-height: calc(100vh - 73px);
+  background: #f8f9fa;
+}
+
+.dark .settings-layout {
+  background: #0f1419;
+}
+
+.settings-sidebar {
+  width: 280px;
+  background: #f7f9f9;
+  border-right: 1px solid #e5e7eb;
+  flex-shrink: 0;
+  overflow-y: auto;
+  position: fixed;
+  left: 0;
+  top: 73px;
+  bottom: 0;
+  height: calc(100vh - 73px);
+  z-index: 10;
+}
+
+.dark .settings-sidebar {
+  background: #16181c;
+  border-right-color: #2f3336;
+}
+
+.settings-content {
+  flex: 1;
+  overflow-y: auto;
+  background: white;
+  margin-left: 280px;
+}
+
+.dark .settings-content {
+  background: #0f1419;
+}
+
+@media (max-width: 768px) {
+  .settings-header {
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .settings-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .settings-sidebar {
+    position: relative;
+    width: 100%;
+    border-right: none;
+    top: 0;
+    height: auto;
+    z-index: 1;
+  }
+
+  .settings-content {
+    margin-left: 0;
+  }
+
+  .settings-layout {
+    min-height: calc(100vh - 60px);
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-header {
+    padding: 0.625rem 0.875rem;
+  }
+
+  .settings-title {
+    font-size: 1rem;
+  }
+}
+</style>

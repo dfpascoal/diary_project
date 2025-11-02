@@ -1,4 +1,5 @@
 
+// @ts-ignore - msw types may not be available
 import { http, HttpResponse } from 'msw'
 import type { UpdateUserDto, UpdateSettingsDto, UserSettings } from '@/types/user'
 import { mockUser, mockSettings } from '@/mocks/state'
@@ -10,17 +11,16 @@ export const handlers = [
 
   http.get('/api/user/settings', () => HttpResponse.json(mockSettings)),
 
-  http.put('/api/user', async ({ request }) => {
+  http.put('/api/user', async ({ request }: any) => {
     const updates = await request.json() as UpdateUserDto
-    Object.assign(mockUser, updates) // merge raso 
+    Object.assign(mockUser, updates) 
     await delay(500)
     return HttpResponse.json(mockUser)
   }),
 
-  http.put('/api/user/settings', async ({ request }) => {
+  http.put('/api/user/settings', async ({ request }: any) => {
     const updates = await request.json() as UpdateSettingsDto
 
-    // merge profund
     const next: UserSettings = {
       ...mockSettings,
       ...updates,
@@ -40,7 +40,7 @@ export const handlers = [
     return HttpResponse.json({ success: true, message: 'Conta deletada com sucesso' })
   }),
 
-http.post('/api/user/avatar', async ({ request }) => {
+http.post('/api/user/avatar', async ({ request }: any) => {
   await request.formData() 
 
   await delay(800)

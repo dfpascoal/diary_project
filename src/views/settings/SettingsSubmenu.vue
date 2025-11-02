@@ -149,12 +149,6 @@ const goBack = () => {
   border-bottom-color: #2f3336;
 }
 
-@media (max-width: 768px) {
-  .submenu-header {
-    padding: 1rem;
-  }
-}
-
 .back-button {
   color: #536471;
 }
@@ -175,8 +169,24 @@ const goBack = () => {
 }
 
 @media (max-width: 768px) {
+  .submenu-header {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
   .submenu-title {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 480px) {
+  .submenu-header {
+    padding: 0.875rem 0.75rem;
+  }
+
+  .submenu-title {
+    font-size: 1rem;
   }
 }
 
@@ -192,6 +202,14 @@ const goBack = () => {
 @media (max-width: 768px) {
   .submenu-content {
     padding: 1rem;
+    gap: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .submenu-content {
+    padding: 0.75rem;
+    gap: 0.75rem;
   }
 }
 
@@ -199,8 +217,16 @@ const goBack = () => {
 .empty-card,
 .additional-card {
   border: 1px solid #e5e7eb;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   box-shadow: none;
+}
+
+@media (max-width: 480px) {
+  .settings-card,
+  .empty-card,
+  .additional-card {
+    border-radius: 0.5rem;
+  }
 }
 
 .dark .settings-card,

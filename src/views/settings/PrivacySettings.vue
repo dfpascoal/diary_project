@@ -24,7 +24,7 @@
       </template>
       <template #content>
         <p class="mb-4">Select quem pode te mencionar ou marcar nas postagens.</p>
-        <Dropdown
+        <Select
           v-model="mentions"
           :options="mentionOptions"
           placeholder="Selecionar"
@@ -94,7 +94,7 @@ import { ref } from 'vue'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
-import Dropdown from 'primevue/dropdown'
+import Select from 'primevue/Select'
 
 const isPrivate = ref(false)
 const showOnline = ref(true)

@@ -30,7 +30,7 @@ const accountStats = ref([
 const accountInfo = ref([
   { label: 'Tipo de conta', value: userProfile.value.accountType, icon: 'pi-id-card' },
   { label: 'Status', value: userProfile.value.status, icon: 'pi-check-circle', badge: true },
-  { label: 'Membro desde', value: userProfile.value.createdAt, icon: 'pi-calendar' },
+  { label: 'Membro desde', value: userProfile.value.createdAt, icon: 'pi-DatePicker' },
   { label: 'E-mail', value: userProfile.value.email, icon: 'pi-envelope' }
 ])
 
@@ -196,12 +196,6 @@ const goBack = () => {
   border-bottom-color: #2f3336;
 }
 
-@media (max-width: 768px) {
-  .account-status__header {
-    padding: 1rem;
-  }
-}
-
 .account-status__title {
   font-size: 1.875rem;
   font-weight: 700;
@@ -214,8 +208,24 @@ const goBack = () => {
 }
 
 @media (max-width: 768px) {
+  .account-status__header {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
   .account-status__title {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-status__header {
+    padding: 0.875rem 0.75rem;
+  }
+
+  .account-status__title {
+    font-size: 1rem;
   }
 }
 
@@ -231,6 +241,14 @@ const goBack = () => {
 @media (max-width: 768px) {
   .account-status__content {
     padding: 1rem;
+    gap: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-status__content {
+    padding: 0.75rem;
+    gap: 0.75rem;
   }
 }
 
@@ -238,8 +256,16 @@ const goBack = () => {
 .info-card,
 .actions-card {
   border: 1px solid #e5e7eb;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   box-shadow: none;
+}
+
+@media (max-width: 480px) {
+  .profile-card,
+  .info-card,
+  .actions-card {
+    border-radius: 0.5rem;
+  }
 }
 
 .dark .profile-card,

@@ -3,14 +3,18 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
-import Accordion from 'primevue/accordion'
-import AccordionTab from 'primevue/accordiontab'
 import InputText from 'primevue/inputtext'
+import Accordion from 'primevue/accordion'
+import AccordionPanel from 'primevue/accordionpanel'
+import AccordionHeader from 'primevue/accordionheader'
+import AccordionContent from 'primevue/accordioncontent'
+
 
 const router = useRouter()
 
-// FAQ
-const faqItems = ref([
+type FaqItem = { question: string; answer: string }
+
+const faqItems = ref<FaqItem[]>([
   {
     question: 'Como altero minha senha?',
     answer: 'Acesse Configurações > Conta > Segurança e clique em "Alterar senha". Você precisará informar sua senha atual e a nova senha duas vezes para confirmação.'
@@ -45,7 +49,8 @@ const faqItems = ref([
   }
 ])
 
-// Quick Actions
+const openPanels = ref<string[]>([])
+
 const quickActions = ref([
   { 
     icon: 'pi-comments', 
@@ -73,7 +78,6 @@ const quickActions = ref([
   }
 ])
 
-// Resources
 const resources = ref([
   { icon: 'pi-book', label: 'Guia do Iniciante', url: '#' },
   { icon: 'pi-video', label: 'Tutoriais em Vídeo', url: '#' },
@@ -89,7 +93,6 @@ const goBack = () => {
 
 const handleAction = (action: string) => {
   console.log('Ação:', action)
-  // Aqui você implementaria as ações específicas
   switch(action) {
     case 'help-center':
       alert('Abrindo Central de Ajuda...')
@@ -109,7 +112,6 @@ const handleAction = (action: string) => {
 
 <template>
   <div class="help-page">
-    <!-- Header -->
     <div class="help-page__header">
       <Button
         icon="pi pi-arrow-left"
@@ -122,10 +124,8 @@ const handleAction = (action: string) => {
       <h1 class="help-page__title">Ajuda</h1>
     </div>
 
-    <!-- Content -->
     <div class="help-page__content">
       
-      <!-- Search Card -->
       <Card class="search-card">
         <template #content>
           <div class="search-section">
@@ -148,7 +148,6 @@ const handleAction = (action: string) => {
         </template>
       </Card>
 
-      <!-- Quick Actions -->
       <Card class="actions-card">
         <template #header>
           <div class="card-header">
@@ -177,7 +176,6 @@ const handleAction = (action: string) => {
         </template>
       </Card>
 
-      <!-- FAQ -->
       <Card class="faq-card">
         <template #header>
           <div class="card-header">
@@ -186,19 +184,22 @@ const handleAction = (action: string) => {
           </div>
         </template>
         <template #content>
-          <Accordion :multiple="true" class="faq-accordion">
-            <AccordionTab
-              v-for="(item, index) in faqItems"
-              :key="index"
-              :header="item.question"
+          <Accordion :multiple="true" v-model:value="openPanels">
+            <AccordionPanel
+              v-for="(item, i) in faqItems"
+              :key="i"
+              :value="String(i)"
             >
-              <p class="faq-answer">{{ item.answer }}</p>
-            </AccordionTab>
+              <AccordionHeader>{{ item.question }}</AccordionHeader>
+              <AccordionContent>
+                {{ item.answer }}
+              </AccordionContent>
+            </AccordionPanel>
           </Accordion>
+
         </template>
       </Card>
 
-      <!-- Resources -->
       <Card class="resources-card">
         <template #header>
           <div class="card-header">
@@ -222,7 +223,6 @@ const handleAction = (action: string) => {
         </template>
       </Card>
 
-      <!-- Contact Card -->
       <Card class="contact-card">
         <template #content>
           <div class="contact-section">
@@ -264,7 +264,6 @@ const handleAction = (action: string) => {
   background: #0f1419;
 }
 
-/* Header */
 .help-page__header {
   position: sticky;
   top: 0;
@@ -282,12 +281,6 @@ const handleAction = (action: string) => {
   border-bottom-color: #2f3336;
 }
 
-@media (max-width: 768px) {
-  .help-page__header {
-    padding: 1rem;
-  }
-}
-
 .help-page__title {
   font-size: 1.875rem;
   font-weight: 700;
@@ -300,12 +293,27 @@ const handleAction = (action: string) => {
 }
 
 @media (max-width: 768px) {
+  .help-page__header {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
   .help-page__title {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
+    font-weight: 600;
   }
 }
 
-/* Content */
+@media (max-width: 480px) {
+  .help-page__header {
+    padding: 0.875rem 0.75rem;
+  }
+
+  .help-page__title {
+    font-size: 1rem;
+  }
+}
+
 .help-page__content {
   max-width: 900px;
   margin: 0 auto;
@@ -318,18 +326,35 @@ const handleAction = (action: string) => {
 @media (max-width: 768px) {
   .help-page__content {
     padding: 1rem;
+    gap: 0.875rem;
   }
 }
 
-/* Cards */
+@media (max-width: 480px) {
+  .help-page__content {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+}
+
 .search-card,
 .actions-card,
 .faq-card,
 .resources-card,
 .contact-card {
   border: 1px solid #e5e7eb;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   box-shadow: none;
+}
+
+@media (max-width: 480px) {
+  .search-card,
+  .actions-card,
+  .faq-card,
+  .resources-card,
+  .contact-card {
+    border-radius: 0.5rem;
+  }
 }
 
 .dark .search-card,
@@ -368,7 +393,6 @@ const handleAction = (action: string) => {
   padding: 1.5rem;
 }
 
-/* Search Section */
 .search-section {
   display: flex;
   gap: 1.5rem;
@@ -423,7 +447,6 @@ const handleAction = (action: string) => {
   font-size: 1rem;
 }
 
-/* Quick Actions */
 .quick-actions {
   display: grid;
   gap: 0.5rem;
@@ -512,7 +535,6 @@ const handleAction = (action: string) => {
   font-size: 1rem;
 }
 
-/* FAQ */
 .faq-accordion {
   border: none;
 }
@@ -521,16 +543,28 @@ const handleAction = (action: string) => {
   margin-bottom: 0.5rem;
 }
 
-:deep(.p-accordion-header-link) {
+:deep(.p-accordion-header) {
   border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
+}
+
+.dark :deep(.p-accordion-header) {
+  border-color: #2f3336;
+}
+
+:deep(.p-accordion-header-link) {
   font-weight: 500;
+  padding: 1rem;
 }
 
 .dark :deep(.p-accordion-header-link) {
-  border-color: #2f3336;
   background: #1c1f23;
   color: #ffffff;
+}
+
+.accordion-header-text {
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .faq-answer {
@@ -543,7 +577,6 @@ const handleAction = (action: string) => {
   color: #8b98a5;
 }
 
-/* Resources */
 .resources-grid {
   display: grid;
   gap: 0.75rem;
@@ -600,7 +633,6 @@ const handleAction = (action: string) => {
   color: #8b98a5;
 }
 
-/* Contact Section */
 .contact-section {
   display: flex;
   gap: 1.5rem;

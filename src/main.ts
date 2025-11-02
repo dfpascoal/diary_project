@@ -20,7 +20,11 @@ if (import.meta.env.DEV) {
       onUnhandledRequest: 'bypass',
     }).then(() => {
       console.log(' MSW iniciado')
+    }).catch((error: Error) => {
+      console.debug('MSW não disponível:', error.message)
     })
+  }).catch(() => {
+    console.debug('MSW módulo não disponível')
   })
 }
 
