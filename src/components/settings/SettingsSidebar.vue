@@ -54,8 +54,15 @@ const emit = defineEmits<{ (e: 'logout'): void }>()
 .sidebar-nav {
   display: flex;
   flex-direction: column;
+  min-height: 100%;
   height: 100%;
-  padding: 1.5rem 0;
+  box-sizing: border-box;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.dark .sidebar-nav {
+  background: #16181c;
 }
 
 .sidebar-header {
@@ -153,12 +160,8 @@ const emit = defineEmits<{ (e: 'logout'): void }>()
 
 .logout {
   padding: 1rem 1.5rem;
-  border-top: 1px solid #e5e7eb;
   margin-top: auto;
-}
-
-.dark .logout {
-  border-top-color: #2f3336;
+  border-top: 0;
 }
 
 .logout-link {

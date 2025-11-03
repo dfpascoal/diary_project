@@ -4,8 +4,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from '@/router'
 import '@/plugins/primevue'
-
-
 import PrimeVue from 'primevue/config'
 import DialogService from 'primevue/dialogservice'
 import ConfirmationService from 'primevue/confirmationservice'

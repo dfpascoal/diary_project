@@ -2,16 +2,25 @@
   <div class="p-4 space-y-6">
     <h2 class="text-2xl font-semibold">Privacidade</h2>
 
-    <Card>
+      <Card>
       <template #header>
         <div class="p-4">
           <h3 class="text-lg font-semibold">Perfil privado</h3>
         </div>
       </template>
+
       <template #content>
-        <div class="flex justify-between items-center">
-          <span>Ativar perfil privado</span>
-          <ToggleSwitch v-model="isPrivate" />
+        <div class="flex items-center justify-between">
+          <label for="private-switch" class="cursor-pointer select-none">
+            Ativar perfil privado
+          </label>
+
+          <ToggleSwitch
+            v-model="isPrivate"
+            inputId="private-switch"
+            :trueValue="true"
+            :falseValue="false"
+          />
         </div>
       </template>
     </Card>
@@ -94,7 +103,7 @@ import { ref } from 'vue'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
-import Select from 'primevue/Select'
+import Select from 'primevue/select'
 
 const isPrivate = ref(false)
 const showOnline = ref(true)

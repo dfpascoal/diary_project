@@ -8,5 +8,12 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  server: {
+    fs: {
+      // Permitir servir arquivos de node_modules (para temas do PrimeVue)
+      allow: ['..']
+    }
+  },
+  publicDir: 'public'
 })

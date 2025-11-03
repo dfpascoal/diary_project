@@ -4,10 +4,12 @@ import { useRoute, useRouter } from 'vue-router'
 import { useDialog } from 'primevue/usedialog'
 import Button from 'primevue/button'
 import SettingsSidebar from '@/components/settings/SettingsSidebar.vue'
+import { useTheme } from '@/composables/useTheme'
 
 const route = useRoute()
 const router = useRouter()
 const dialog = useDialog()
+const { isDark, toggleTheme } = useTheme()
 
 const isMobile = ref(false)
 onMounted(() => {
@@ -24,40 +26,6 @@ const showContent = computed(() => !isMobile.value || !isRoot.value)
 
 function goBack() {
   router.push({ name: 'settings-home' })
-}
-
-const THEME_LINK_ID = 'primevue-theme'
-const themes = {
-  light: new URL('primevue/resources/themes/aura-light-noir/theme.css', import.meta.url).href,
-  dark: new URL('primevue/resources/themes/aura-dark-noir/theme.css', import.meta.url).href
-}
-
-function ensureThemeLink() {
-  let link = document.getElementById(THEME_LINK_ID) as HTMLLinkElement | null
-  if (!link) {
-    link = document.createElement('link')
-    link.id = THEME_LINK_ID
-    link.rel = 'stylesheet'
-    document.head.appendChild(link)
-  }
-  return link
-}
-
-function setPrimeTheme(mode: 'light' | 'dark') {
-  const link = ensureThemeLink()
-  link.href = themes[mode]
-  document.documentElement.classList.toggle('dark', mode === 'dark')
-  localStorage.setItem('theme', mode)
-}
-
-const isDark = ref((localStorage.getItem('theme') || 'light') === 'dark')
-onMounted(() => {
-  setPrimeTheme(isDark.value ? 'dark' : 'light')
-})
-
-function toggleTheme() {
-  isDark.value = !isDark.value
-  setPrimeTheme(isDark.value ? 'dark' : 'light')
 }
 
 async function openLogout() {
@@ -101,18 +69,18 @@ async function openLogout() {
 
 <style scoped>
 .settings-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 2rem;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
   position: sticky;
   top: 0;
   z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 64px;
+  padding: 0 2rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
-
 .dark .settings-header {
   background: #16181c;
   border-bottom-color: #2f3336;
@@ -124,39 +92,27 @@ async function openLogout() {
   color: #0f1419;
   margin: 0;
 }
+.dark .settings-title { color: #ffffff; }
 
-.dark .settings-title {
-  color: #ffffff;
-}
-
-.spacer {
-  flex: 1;
-}
+.spacer { flex: 1; }
 
 .settings-layout {
   display: flex;
-  min-height: calc(100vh - 73px);
+  min-height: calc(100vh - 64px);
   background: #f8f9fa;
 }
-
-.dark .settings-layout {
-  background: #0f1419;
-}
+.dark .settings-layout { background: #0f1419; }
 
 .settings-sidebar {
   width: 280px;
+  flex-shrink: 0;
   background: #f7f9f9;
   border-right: 1px solid #e5e7eb;
-  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 64px);
   overflow-y: auto;
-  position: fixed;
-  left: 0;
-  top: 73px;
-  bottom: 0;
-  height: calc(100vh - 73px);
-  z-index: 10;
 }
-
 .dark .settings-sidebar {
   background: #16181c;
   border-right-color: #2f3336;
@@ -164,19 +120,17 @@ async function openLogout() {
 
 .settings-content {
   flex: 1;
+  min-width: 0;
   overflow-y: auto;
-  background: white;
-  margin-left: 280px;
+  background: #ffffff;
 }
-
-.dark .settings-content {
-  background: #0f1419;
-}
+.dark .settings-content { background: #0f1419; }
 
 @media (max-width: 768px) {
   .settings-header {
-    padding: 0.75rem 1rem;
+    padding: 0 1rem;
     gap: 0.75rem;
+    height: 56px;
   }
 
   .settings-title {
@@ -184,31 +138,27 @@ async function openLogout() {
     font-weight: 600;
   }
 
+  .settings-layout {
+    min-height: calc(100vh - 56px);
+  }
+
   .settings-sidebar {
     position: relative;
-    width: 100%;
-    border-right: none;
     top: 0;
+    width: 100%;
     height: auto;
-    z-index: 1;
+    border-right: none;
+    overflow: visible;
   }
 
   .settings-content {
-    margin-left: 0;
-  }
-
-  .settings-layout {
-    min-height: calc(100vh - 60px);
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .settings-header {
-    padding: 0.625rem 0.875rem;
-  }
-
-  .settings-title {
-    font-size: 1rem;
-  }
+  .settings-header { padding: 0 0.875rem; height: 52px; }
+  .settings-title { font-size: 1rem; }
+  .settings-layout { min-height: calc(100vh - 52px); }
 }
 </style>

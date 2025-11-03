@@ -134,9 +134,12 @@ const handleAction = (action: string) => {
               <h2 class="search-title">Como podemos ajudar?</h2>
               <p class="search-description">Pesquise por palavras-chave ou navegue pelas perguntas frequentes</p>
               <div class="search-input-wrapper">
+                <label for="help-search" class="sr-only">Buscar na ajuda</label>
                 <span class="p-input-icon-left w-full">
                   <i class="pi pi-search" />
                   <InputText 
+                    id="help-search"
+                    name="help-search"
                     v-model="searchQuery"
                     placeholder="Buscar na ajuda..."
                     class="w-full search-input"
@@ -272,13 +275,8 @@ const handleAction = (action: string) => {
   align-items: center;
   gap: 1rem;
   padding: 1.5rem 2rem;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.dark .help-page__header {
-  background: #16181c;
-  border-bottom-color: #2f3336;
+  background: transparent;
+  border-bottom: none;
 }
 
 .help-page__title {
@@ -690,5 +688,17 @@ const handleAction = (action: string) => {
   .contact-button {
     width: 100%;
   }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 </style>

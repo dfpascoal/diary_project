@@ -1,8 +1,35 @@
-
 import { ref, watch, computed } from 'vue'
 import type { ThemeMode } from '@/types/settings'
 
-const THEME_STORAGE_KEY = 'app-theme'
+const THEME_STORAGE_KEY = 'theme'
+const THEME_LINK_ID = 'primevue-theme'
+
+function ensureThemeLink() {
+  if (typeof document === 'undefined') return null
+  let link = document.getElementById(THEME_LINK_ID) as HTMLLinkElement | null
+  if (!link) {
+    link = document.createElement('link')
+    link.id = THEME_LINK_ID
+    link.rel = 'stylesheet'
+    link.type = 'text/css'
+    document.head.appendChild(link)
+  }
+  return link
+}
+
+function setPrimeTheme(mode: 'light' | 'dark') {
+  const link = ensureThemeLink()
+  if (!link) return
+  
+  const themeName = mode === 'dark' ? 'aura-dark-noir' : 'aura-light-noir'
+  
+
+  link.href = `/node_modules/@primevue/themes/aura/${themeName}/theme.css`
+  
+  link.onerror = () => {
+    console.warn(`Tema ${themeName} não encontrado no caminho padrão`)
+  }
+}
 
 export function useTheme() {
   const currentTheme = ref<ThemeMode>(
@@ -12,13 +39,16 @@ export function useTheme() {
   const isDark = computed(() => currentTheme.value === 'dark')
 
   const applyTheme = (theme: ThemeMode) => {
-    const htmlElement = document.documentElement
+    if (typeof document === 'undefined') return
     
-    if (theme === 'dark') {
-      htmlElement.classList.add('dark-mode')
-    } else {
-      htmlElement.classList.remove('dark-mode')
-    }
+    const htmlElement = document.documentElement
+    const mode = theme === 'dark' ? 'dark' : 'light'
+    
+    htmlElement.classList.toggle('dark', theme === 'dark')
+    
+    setPrimeTheme(mode)
+    
+    localStorage.setItem(THEME_STORAGE_KEY, theme)
   }
 
   const toggleTheme = () => {
@@ -29,13 +59,15 @@ export function useTheme() {
     currentTheme.value = theme
   }
 
+  if (typeof window !== 'undefined') {
+    applyTheme(currentTheme.value)
+  }
+
   watch(
     currentTheme,
     (newTheme) => {
-      localStorage.setItem(THEME_STORAGE_KEY, newTheme)
       applyTheme(newTheme)
-    },
-    { immediate: true }
+    }
   )
 
   return {

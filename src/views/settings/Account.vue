@@ -92,6 +92,7 @@ const cancelChanges = (): void => {
               <label for="name" class="field-label">Nome completo</label>
               <InputText
                 id="name"
+                name="name"
                 v-model="accountData.name"
                 autocomplete="name"
                 class="w-full"
@@ -104,6 +105,7 @@ const cancelChanges = (): void => {
                 <span class="p-inputgroup-addon">@</span>
                 <InputText
                   id="username"
+                  name="username"
                   v-model="accountData.username"
                   autocomplete="username"
                 ></InputText>
@@ -114,6 +116,7 @@ const cancelChanges = (): void => {
               <label for="email" class="field-label">E-mail</label>
               <InputText
                 id="email"
+                name="email"
                 v-model="accountData.email"
                 type="email"
                 autocomplete="email"
@@ -125,6 +128,7 @@ const cancelChanges = (): void => {
               <label for="phone" class="field-label">Telefone</label>
               <InputMask
                 id="phone"
+                name="phone"
                 v-model="accountData.phone"
                 mask="+55 99 99999-9999"
                 slotChar="_"
@@ -138,6 +142,7 @@ const cancelChanges = (): void => {
               <label for="birthDate" class="field-label">Data de nascimento</label>
               <DatePicker
                 inputId="birthDate"
+                inputName="birthDate"
                 v-model="accountData.birthDate"
                 dateFormat="dd/mm/yy"
                 autocomplete="bday"
@@ -153,6 +158,7 @@ const cancelChanges = (): void => {
               <label for="gender" class="field-label">Gênero</label>
               <Select
                 inputId="gender"
+                inputName="gender"
                 v-model="accountData.gender"
                 :options="genderOptions"
                 optionLabel="label"
@@ -181,6 +187,7 @@ const cancelChanges = (): void => {
               <label for="language" class="field-label">Idioma</label>
               <Select
                 inputId="language"
+                inputName="language"
                 v-model="accountData.language"
                 :options="languageOptions"
                 optionLabel="label"
@@ -196,6 +203,7 @@ const cancelChanges = (): void => {
               <label for="timezone" class="field-label">Fuso horário</label>
               <Select
                 inputId="timezone"
+                inputName="timezone"
                 v-model="accountData.timezone"
                 :options="timezoneOptions"
                 optionLabel="label"
@@ -320,12 +328,8 @@ const cancelChanges = (): void => {
   align-items: center;
   gap: 1rem;
   padding: 1.5rem 2rem;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-}
-.dark .account-settings__header {
-  background: #16181c;
-  border-bottom-color: #2f3336;
+  background: transparent;
+  border-bottom: none;
 }
 .account-settings__title {
   font-size: 1.875rem;

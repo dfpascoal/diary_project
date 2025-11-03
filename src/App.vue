@@ -1,30 +1,25 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import DynamicDialog from 'primevue/dynamicdialog'
+import ConfirmDialog from 'primevue/confirmdialog'
+import Toast from 'primevue/toast'
 </script>
 
 <template>
-  <RouterView />
+  <Toast />
+  <ConfirmDialog />
   <DynamicDialog />
+  <RouterView />
 </template>
 
 <style>
-:deep(.p-dialog-content) {
-  background: white !important;
-}
-
-.dark :deep(.p-dialog-content) {
-  background: #16181c !important;
-}
-
 :deep(.p-dialog-header) {
-  background: white !important;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--p-surface-0) !important;
+  border-bottom: 1px solid var(--p-surface-200);
 }
 
-.dark :deep(.p-dialog-header) {
-  background: #16181c !important;
-  border-bottom: 1px solid #2f3336;
+:deep(.p-dialog-content) {
+  background: var(--p-surface-0) !important;
 }
 
 :deep(.p-dialog-mask) {
