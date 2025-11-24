@@ -1,3 +1,4 @@
+///alteração nos icones adicionei na main
 import './assets/main.css'
 
 import { createApp } from 'vue'
