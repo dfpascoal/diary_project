@@ -6,9 +6,6 @@ const emit = defineEmits<{ (e: 'logout'): void }>()
 
 <template>
   <nav class="sidebar-nav">
-    <div class="sidebar-header">
-      <span class="sidebar-header-title">Configurações</span>
-    </div>
     <ul class="menu">
       <li>
         <RouterLink :to="{ name: 'settings-home' }" class="menu-item" active-class="is-active">
