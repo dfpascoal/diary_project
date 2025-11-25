@@ -1,3 +1,4 @@
+# Logs
 logs
 *.log
 npm-debug.log*
@@ -6,31 +7,24 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules/
-dist/
-dist-ssr/
-.vite/
-coverage/
-
-*.local
-*.tsbuildinfo
-*.cache
-.cache/
-
-.vscode/
-!.vscode/extensions.json
-.idea/
+node_modules
 .DS_Store
-Thumbs.db
+dist
+dist-ssr
+coverage
+*.local
+
+/cypress/videos/
+/cypress/screenshots/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-.env
-.env.*
-!.env.example
-
-storybook-static/
-public/mockServiceWorker.js
+*.tsbuildinfo
