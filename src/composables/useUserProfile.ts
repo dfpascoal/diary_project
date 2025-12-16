@@ -9,7 +9,7 @@ const fetchUserProfile = async (): Promise<UserProfile> => {
     name: 'John Doe',
     email: 'john.doe@example.com',
     avatar: 'https://i.pravatar.cc/150?u=john',
-    status: 'Available'
+    status: 'Ativo'
   }
 }
 

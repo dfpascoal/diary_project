@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import Card from 'primevue/card'
-import { useUserProfile } from '@/composables/useUserProfile'
+import { useUserProfile } from '@/composables/useUserProfile';
+import ClientesHoje from '@/components/agenda/ClientesHoje.vue';
 
 const { profile, isLoading } = useUserProfile()
 
 const welcomeMessage = computed(() => {
   return profile.value 
-    ? `Welcome back, ${profile.value.name}!` 
-    : 'Welcome to Settings'
+    ? `Bem vindo de volta, ${profile.value.name}!` 
+    : 'Bem vindo à configuração do seu aplicativo.'
 })
 </script>
 
@@ -17,7 +18,7 @@ const welcomeMessage = computed(() => {
     <div class="settings-home-container">
       <div class="settings-home-header">
         <h1 class="settings-home-title">
-          Settings
+          Barbearia Diária
         </h1>
         
         <p v-if="!isLoading" class="settings-home-subtitle">
@@ -27,23 +28,18 @@ const welcomeMessage = computed(() => {
 
       <Card class="settings-card-empty">
         <template #content>
-          <div class="empty-state">
-            <i class="pi pi-cog empty-state-icon"></i>
-            <h2 class="empty-state-title">
-              Select a Setting
-            </h2>
-            <p class="empty-state-description">
-              Choose an option from the sidebar to get started
-            </p>
+          <div style="padding: 2rem; color: white;">
+              
+            <ClientesHoje />
           </div>
         </template>
       </Card>
-
+      
       <Card v-if="profile" class="settings-card-profile">
         <template #header>
           <div class="profile-card-header">
             <h3 class="profile-card-title">
-              Your Profile
+              Seu Perfil
             </h3>
           </div>
         </template>
@@ -120,12 +116,15 @@ const welcomeMessage = computed(() => {
 
 .settings-card-empty,
 .settings-card-profile {
-  border: 1px solid #e5e7eb;
+ border: 1px solid #e5e7eb;
   border-radius: 0.75rem;
   box-shadow: none;
   margin-bottom: 1.5rem;
 }
 
+.settings-card-empty {
+  min-height: 400px;
+}
 .dark .settings-card-empty,
 .dark .settings-card-profile {
   border-color: #2f3336;
